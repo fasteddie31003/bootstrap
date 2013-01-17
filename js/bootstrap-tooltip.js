@@ -53,6 +53,8 @@
         this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
       }
 
+      
+
       this.options.selector ?
         (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
         this.fixTitle()
@@ -104,6 +106,8 @@
         , placement
         , tp
 
+      var that = this
+
       if (this.hasContent() && this.enabled) {
         $tip = this.tip()
         this.setContent()
@@ -141,6 +145,12 @@
           case 'right':
             tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}
             break
+        }
+
+        if(this.options.addclosebutton){
+            $tip.find('.closePopoverButton').click(function(){
+              that.hide()
+            })
         }
 
         $tip
@@ -207,6 +217,14 @@
 
       title = $e.attr('data-original-title')
         || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+        
+      if(o.addclosebutton){
+        var titleObj= $('<span>'+title+'</span>')
+        titleObj.append('<span class="closePopoverButton" style="float:right; cursor:pointer;">x</span>')
+        this.options.html=true
+        return titleObj
+      }
 
       return title
     }
