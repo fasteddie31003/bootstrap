@@ -115,6 +115,11 @@
         if (this.options.animation) {
           $tip.addClass('fade')
         }
+        if(this.options.width){
+          $tip.css('width',this.options.width);
+        }
+
+
 
         placement = typeof this.options.placement == 'function' ?
           this.options.placement.call(this, $tip[0], this.$element[0]) :
@@ -145,6 +150,11 @@
           case 'right':
             tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}
             break
+           case 'comment':
+            placement='right'
+            $tip.find('.arrow').css('top',30)
+            tp={top: pos.top + pos.height -40 , left: pos.left + pos.width}
+            break
         }
 
         if(this.options.addclosebutton){
@@ -152,7 +162,6 @@
               that.hide()
             })
         }
-
         $tip
           .offset(tp)
           .addClass(placement)
